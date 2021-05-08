@@ -1,0 +1,60 @@
+name       : ocaml
+version    : 4.12.0
+release    : 15
+homepage   : https://ocaml.org/
+source     :
+  - https://caml.inria.fr/distrib/ocaml-4.12/ocaml-4.12.0.tar.xz : 39ee9db8dc1e3eb65473dd81a71fabab7cc253dbd7b85e9f9b5b28271319bec3
+license    :
+    - QPL-1.0
+    - LGPL-2.1
+component  : programming
+summary    : 
+    - A functional language with OO extensions
+    - compiler-libs: OCaml libraries to interface with the compiler
+    - doc: Documentation for the OCaml standard library
+    - devel: Header files for writing C stubs for the OCaml compiler
+description: |
+    OCaml is an industrial strength programming language supporting functional, imperative and object-oriented styles
+patterns   :
+    - compiler-libs: /usr/lib*/ocaml/compiler-libs/*
+    - doc: /usr/share/man/man3/*
+    - devel: /usr/include/* # avoid dependency on ocaml
+
+rundeps    :
+    - compiler-libs:
+      - ocaml
+
+setup      : |
+    ./configure -prefix /usr \
+                -libdir %libdir%/ocaml \
+                -mandir /usr/share/man \
+                --disable-installing-bytecode-programs \
+                # --enable-flambda \
+build      : |
+    %make
+install    : |
+    %make_install
+
+    compiler_libs="$installdir/%libdir%/ocaml/compiler-libs"
+    mkdir -p "$compiler_libs"/{parsing,typing,utils}
+    cp parsing/*.{cmi,cmo,cmx,ml,mli,mll,o} "$compiler_libs"/parsing
+    cp typing/*.{cmi,cmo,cmx,ml,mli,o} "$compiler_libs"/typing
+    cp utils/*.{cmi,cmo,cmx,ml,mli,o} "$compiler_libs"/utils
+
+    # OPTION: remove outcometree
+    # rm -f "$compiler_libs"/typing/outcometree.{cmi,mli}
+
+    # OPTION IF BYTE: consistent naming of binaries, remove bytecode ones
+    # bindir="$installdir/usr/bin"
+    # mv $bindir/ocamldoc{,.byte}
+    # ln -sr $bindir/ocamldoc{.opt,}
+    # rm -f $installdir/usr/bin/*.byte
+
+    # OPTION: remove annotation files
+    # find $installdir/%libdir%/ocaml \
+    #   \( -name '*.cmt' -o -name '*.cmti' \) \
+    #   -a -delete
+
+    # link header files to /usr/include for ffi stub development
+    mkdir -p $installdir/usr/include/
+    ln -s $installdir/%libdir%/ocaml/caml $installdir/usr/include/caml
