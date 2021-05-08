@@ -1,0 +1,41 @@
+# Contributor: Haz <hyphen@tfwno.gf>
+# Maintainer: Haz <hyphen@tfwno.gf>
+pkgname=es-shell
+pkgver=0.9.1
+pkgrel=0
+pkgdesc="A shell with higher-order functions"
+url="https://wryun.github.com/es-shell/"
+arch="all"
+license="GPL-2.0"
+makedepends="byacc readline-dev"
+subpackages="$pkgname-doc"
+source="
+https://github.com/wryun/es-shell/releases/download/v$pkgver/es-$pkgver.tar.gz
+pull-25-always-use-va_copy.patch
+readline-history.patch
+"
+builddir="$srcdir/"
+
+build() {
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=$pkgdir/usr \
+		--sysconfdir=$pkgdir/etc \
+		--mandir=$pkgdir/usr/share/man \
+		--localstatedir=$pkdir/var \
+		--with-readline
+	make
+}
+
+check() {
+	:
+}
+
+package() {
+	make DESTDIR="$pkgdir" install
+}
+
+sha512sums="4dfa2096e14977437e5dea3ac89e65dc08b5abbb0433af711a1759d5f719f82b24fdcc85ff764526aaae627998da4022504bb21fe96adeb3e434f29356f39593  es-0.9.1.tar.gz
+67adbd901dc797f1bd707ab8a80da641416bfc7829af17137afdfff6f6068b22a7bedb4d78de0f09517d0cdb5781b3459fd0a252b0d833a90d28d731b5b9fcb7  pull-25-always-use-va_copy.patch
+974ca176d98c6040cf5f753b11256f92387e2f591f8dbe6bb7211eae28cfead71e5081393d22ae3e0d245d9a39f1bd8211eae57e422bff27669bc28214947b82  readline-history.patch"

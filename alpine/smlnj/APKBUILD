@@ -1,0 +1,85 @@
+# Contributor: Haz <hyphen@tfwno.gf>
+# Maintainer: Haz <hyphen@tfwno.gf>
+pkgname=smlnj
+pkgver=110.99
+pkgrel=0
+pkgdesc="Standard ML compiler from New Jersy"
+url="https://www.smlnj.org/"
+arch="all"
+license="SMLNJ"
+install="$pkgname.post-install"
+_url="http://smlnj.cs.uchicago.edu/dist/working/$pkgver/"
+source="
+	$pkgname-$pkgver-boot.amd64-unix.tgz::${_url}boot.amd64-unix.tgz
+	$pkgname-$pkgver-boot.x64-unix.tgz::${_url}boot.x86-unix.tgz
+	$pkgname-$pkgver-config.tgz::${_url}config.tgz
+	$pkgname-$pkgver-cm.tgz::${_url}cm.tgz
+	$pkgname-$pkgver-compiler.tgz::${_url}compiler.tgz
+	$pkgname-$pkgver-runtime.tgz::${_url}runtime.tgz
+	$pkgname-$pkgver-system.tgz::${_url}system.tgz
+	$pkgname-$pkgver-MLRISC.tgz::${_url}MLRISC.tgz
+	$pkgname-$pkgver-smlnj-lib.tgz::${_url}smlnj-lib.tgz
+	$pkgname-$pkgver-ckit.tgz::${_url}ckit.tgz
+	$pkgname-$pkgver-nlffi.tgz::${_url}nlffi.tgz
+	$pkgname-$pkgver-cml.tgz::${_url}cml.tgz
+	$pkgname-$pkgver-ml-lpt.tgz::${_url}ml-lpt.tgz
+	$pkgname-$pkgver-ml-lex.tgz::${_url}ml-lex.tgz
+	$pkgname-$pkgver-ml-yacc.tgz::${_url}ml-yacc.tgz
+	$pkgname-$pkgver-ml-burg.tgz::${_url}ml-burg.tgz
+	$pkgname-$pkgver-trace-debug-profile.tgz::${_url}trace-debug-profile.tgz
+	urlgetter.sh
+	profile.d-smlnj.sh
+	smlnj.sh
+"
+
+builddir="$srcdir/"
+
+build() {
+	mkdir -p install
+	unset SMLNJ_HOME MAKEFLAGS
+	export srcdir
+	export pkgver
+	export INSTALLDIR="$srcdir/install"
+	export CFLAGS="$CFLAGS -Wl,-z,relro,-z-now"
+	export LDFLAGS="$LDFLAGS -Wl,-z,relro,-z-now"
+	URLGETTER="$srcdir/urlgetter.sh"
+	config/install.sh -64
+}
+
+check() {
+	:
+}
+
+package() {
+	install -d "$pkgdir/usr/lib/smlnj" "$pkgdir/usr/share"
+	install -Dm755 "$srcdir/profile.d-smlnj.sh" \
+	               "$pkgdir/etc/profile.d/smlnj.sh"
+	install -Dm644 compiler/LICENSE \
+	               "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	cp -R "$srcdir/install/bin" "$srcdir/install/lib" "$pkgdir/usr/lib/smlnj"
+	cp -R "$srcdir/doc/man" "$pkgdir/usr/share/"
+	find "$pkgdir/usr/share/man" -name '._*' -delete
+	install -Dm755 smlnj.sh "$pkgdir/usr/bin/smlnj"
+}
+
+sha512sums="d2147c0a2fde1b6ddb5da0247e7799e434ee355fc6b62748597737152eaee9fd221a1f8ab2eaa1eba2bd62cfa7c946642c45bf99d3261581a4681b555dd3bcdb  smlnj-110.99-boot.amd64-unix.tgz
+2b70ce5641fa627d65e27bef112b9934e851da4b5c99be9a6da100be977a8c4822ac39a6f06c165a9c377b1fb7f2cbfda49bc138dfcdb37f38b2de74e156c6c1  smlnj-110.99-boot.x64-unix.tgz
+68c39235304988a066155c71aec8d9a1dd68f89feb6cce99382729cbae69b74c40d9b8e1f5d2b7ee96edf25339b976625807f77e7dba70fc8c861ee565e62478  smlnj-110.99-config.tgz
+9a27d3e475a67560a21797fe72b7dcf869378bf13ef2f284f83610df117f95b7c1e306b4f39d3448269a6eb857e780bc9cd085cc95b7c245ad12c0ed30ae3cdd  smlnj-110.99-cm.tgz
+effc5ff5260e247a37fd174f51a39f2a7f22ceee22a7f39ee77bd985085927c57ca23e4fb684b887b09dd7916a264423ba10e63058660e993f2ecba64cb1384b  smlnj-110.99-compiler.tgz
+b453c47473e01d03ac6c8e4d2e2e8b2d5ad1ebb05a8ddf1f4ff8c7e34c29fc9e836bed1a2d73a244325b94ccea4bf20eab6599629c0bcbae5b5b74aaeb65b1e1  smlnj-110.99-runtime.tgz
+d12ad3770c6abe5a01f9b9957b9b18cfb6040bf229fae03104abfb5fc95a43b5f86fb6bfa35d7308d3aab91b7bd1d6c733d2236d0a171770bd77d41ea7cf847e  smlnj-110.99-system.tgz
+a57a492d5d1a9d1c544462b8fdd3b22e844b22162e491d06328199f03d07f229cbdaf4e6501963eccea51799a4b99f533a571630bd4e724c952928e38f463dc0  smlnj-110.99-MLRISC.tgz
+bc4c128f027b143bcb92fc988d8162dd530d373d9fe10aa0edbdb71531d60df19b8e396d7d3f0c18ceaf81031d301cc319f1a7822545e90c11c6d5f948333385  smlnj-110.99-smlnj-lib.tgz
+9195caa8a9b8db2f61b462c56429e036335cffe611e850723cb48a7cd2397eb0db6aa7f69a0e8743e8bbb7b3c4534f22e1057c3c82d1d03e99717022bcef1f03  smlnj-110.99-ckit.tgz
+bedc30fda126d613e4e8cbb43e211852969438f190245a78183262b012bbb22322c51d9cf1889a971a695c8d81f20b4ccf05fd4a343f2830551b5140b32ff50b  smlnj-110.99-nlffi.tgz
+f44c669a9e3fbcb583431af0986bd1fbc5f12348cce67aea9ab371896b35949601eada61215af13e775b79f5b9c130a1b20ed67e0cdfa76e6ff1cfca5bbd852b  smlnj-110.99-cml.tgz
+84e565a7dbf5abeaf31e270655c31cdc49bf94fa73616e6802271122cdf5544ab963f8daa00f794c895581029e85dbeaebc7f881a275db16594c8a5dbba33124  smlnj-110.99-ml-lpt.tgz
+b018ff90e40957489a70dc9f2abc0dae3f2f2a5520ea7f9c8c32e5fbd934198b2df4b4b1900b274deb16bab9366c354bf7db1fde7b841247762d0e24a2e47af3  smlnj-110.99-ml-lex.tgz
+e5c45ff343dbf11548b522f57c51f7828db1f0bc3fae6cb6015ed295e816da4b220ffeb310a2243750f0a08b64e4615d1c69a7a42dfebddab04ae49276c58073  smlnj-110.99-ml-yacc.tgz
+32aba0d1c528c078bd884003586cead166d53193d18eeddf3e1bf825f3bb5c32cde3ae999a0c64e8b44ec936e08366bfbe2c81bb78a3a56607a03a43c2536ca7  smlnj-110.99-ml-burg.tgz
+782901d640c24e29c32a2d9e391cc2472c6a10a18df565539838de887372a27a96653be11b942c4532f15aa62d6d5ea20746c94e1eac00485662cdbfb29c1d59  smlnj-110.99-trace-debug-profile.tgz
+b094f29fb5df84dd3b2c7c8ef90b08599cc2e10eb8a72d21d7d3c55e214cd8b0f83113e845143f2fc5ca885799a67d07b993ef7d393b985d87bf9fbfd43ffb1a  urlgetter.sh
+a2a67c255fe65b4a9e4e8d8e4b0bfc02b3fda08afe53fc2b96d9eb5b36c9b57703febb1c469bac1e738a6496f704b04d93dce6d4d879418b97f435ddd899fb0d  profile.d-smlnj.sh
+320244e47fd0f59ef0e867ae25459de1fca6d6ed4b579ad3d1024973fb0b55b56402786c0c2128d944d05cfe7b4f3b7a528ebf9fa48d76944fcec3a3baf2bfe4  smlnj.sh"
+

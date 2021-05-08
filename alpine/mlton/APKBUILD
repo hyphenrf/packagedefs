@@ -1,0 +1,29 @@
+# Contributor: Haz <hyphen@tfwno.gf>
+# Maintainer: Haz <hyphen@tfwno.gf>
+pkgname=mlton
+pkgver=20201002
+pkgrel=0
+pkgdesc="Standard ML whole program optimizing compiler"
+url="http://www.mlton.org/"
+arch="all"
+license="HPND"
+depends="gmp"
+source="$pkgname-$pkgver.tar.gz::https://github.com/MLton/mlton/archive/refs/tags/on-$pkgver-release.tar.gz"
+builddir="$srcdir/$pkgname-on-$pkgver-release"
+
+build() {
+	# Replace with proper build command(s)
+	:
+}
+
+check() {
+	# Replace with proper check command(s)
+	:
+}
+
+package() {
+	# Replace with proper package command(s)
+	:
+}
+
+sha512sums="79e311edcca667d5cbbf8d63f8dd2556d7a49d60aef50cddfd7a793e17b56d1fdb50394c2b9596f848a73ab3a654163ea967a628524160e4306794d2b7f0b2ca  mlton-20201002.tar.gz"

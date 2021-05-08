@@ -1,0 +1,47 @@
+From 2938602465699603e7ef41e4fc4986f9c58e4ca9 Mon Sep 17 00:00:00 2001
+From: Eduardo Francisco <eadwardus@disroot.org>
+Date: Tue, 17 Sep 2019 10:50:01 -0300
+Subject: [PATCH] Always use va_copy
+
+---
+ print.c  | 7 +------
+ stdenv.h | 5 +++++
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/print.c b/print.c
+index c75679a..eab644a 100644
+--- a/print.c
++++ b/print.c
+@@ -273,15 +273,10 @@ extern int fmtprint VARARGS2(Format *, format, const char *, fmt) {
+ 	va_list saveargs = format->args;
+ #endif
+ 
+-
+ 	VA_START(format->args, fmt);
+ 	n += printfmt(format, fmt);
+ 	va_end(format->args);
+-#ifndef __va_copy
+-	format->args = saveargs;
+-#else
+-	__va_copy(format->args, saveargs);
+-#endif
++	va_copy(format->args, saveargs);
+ 
+ 	return n + format->flushed;
+ }
+diff --git a/stdenv.h b/stdenv.h
+index 6103737..f5c5d8c 100644
+--- a/stdenv.h
++++ b/stdenv.h
+@@ -204,6 +204,11 @@ typedef GETGROUPS_T gidset_t;
+ #define	VARARGS2(t1, v1, t2, v2)	(v1, v2, va_alist) t1 v1; t2 v2; va_dcl
+ #define	VA_START(ap, var)		va_start(ap)
+ 
++/* __va_* are defined by the compiler */
++#define va_start(ap)		__va_start(ap)
++#define va_copy(dest, src)	__va_copy(dest, src)
++#define va_end(ap)		__va_end(ap)
++
+ #endif
+ 
+ 

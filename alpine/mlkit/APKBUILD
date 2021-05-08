@@ -1,0 +1,29 @@
+# Contributor: Haz <hyphen@tfwno.gf>
+# Maintainer: Haz <hyphen@tfwno.gf>
+pkgname=mlkit
+pkgver=4.5.7
+pkgrel=0
+pkgdesc="Standard ML separate compiler with regions"
+url="http://www.elsman.com/mlkit/"
+arch="all"
+license="GPL-2.0"
+depends="gmp"
+source="$pkgname-$pkgver.tar.gz::https://github.com/melsman/mlkit/archive/refs/tags/v$pkgver.tar.gz"
+builddir="$srcdir/"
+
+build() {
+	# Replace with proper build command(s)
+	:
+}
+
+check() {
+	# Replace with proper check command(s)
+	:
+}
+
+package() {
+	# Replace with proper package command(s)
+	:
+}
+
+sha512sums="31b32b20edf23499d839f487f897e4379970b127404d85369415975389488d62ca231643f9d5718c921e75731a90853eaceb48b9497e957d8c227ed7916f587b  mlkit-4.5.7.tar.gz"

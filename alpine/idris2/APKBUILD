@@ -1,0 +1,60 @@
+# Contributor: Haz <hyphen@tfwno.gf>
+# Maintainer: Haz <hyphen@tfwno.gf>
+pkgname=idris2
+pkgver=0.3.0
+pkgrel=0
+pkgdesc="Second iteration of the Idris programming language, a functional programming language with first-class types"
+#source="https://www.idris-lang.org/idris2-src/idris2-$pkgver.tgz"
+source="master.zip"
+url="https://idris-lang.org"
+license="BSD-3-Clause"
+arch="all"
+depends="chez-scheme"
+makedepends="coreutils"
+#builddir="$srcdir/Idris2-$pkgver"
+builddir="$srcdir/Idris2-master"
+
+prepare() {
+	patch_args='-t -p1'
+	default_prepare
+	echo 'PREFIX=/usr/lib' >> custom.mk
+	echo 'SCHEME=chez' >> custom.mk
+}
+
+build() {
+	#make -j1 bootstrap-build
+	make -j1 bootstrap
+}
+
+check() {
+	make test
+}
+
+package() {
+	# installing idris
+	make install-idris2  PREFIX="$pkgdir/usr/lib"
+	make install-support PREFIX="$pkgdir/usr/lib"
+	for lib in prelude base contrib network
+	do
+		cd libs/$lib
+		IDRIS2_PREFIX="$pkgdir/usr/lib" ../../build/exec/idris2 --install \
+			$lib.ipkg
+		cd ../..
+	done
+
+	# clean up install
+	mkdir -p "$pkgdir/usr/bin"
+	mv "$pkgdir/usr/lib/bin/idris2_app/idris2.so" "$pkgdir/usr/bin/idris2"
+	rm -r "$pkgdir/usr/lib/bin"
+	mv "$pkgdir/usr/lib/lib/libidris2_support.so" \
+	   "$pkgdir/usr/lib/libidris2_support.so"
+	rmdir "$pkgdir/usr/lib/lib"
+
+	# fix permissions
+	find "$pkgdir" -type d -exec chmod 755 {} \;
+
+	# install license
+	install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
+sha512sums="76ace1f7258f978825732853df123071675bc50ca156d511eed7b5a330617a6039ecf05ef6a84d74429a70dbb0721115cbe1feebd88dd9281296dbaa2b77a0c3  master.zip"
