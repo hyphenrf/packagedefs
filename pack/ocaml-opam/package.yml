@@ -1,0 +1,39 @@
+name       : ocaml-opam
+version    : 2.1.0
+release    : 2
+source     :
+  - https://github.com/ocaml/opam/archive/2.1.0-beta2.tar.gz : a4fb3d77acad0b6d925050cb775fbcc3a37d40b1db0d4bfc71402d1c53e9fc22
+license    : LGPL-2.1-only
+component  : programming.tools
+summary    : source-based package manager for OCaml
+description: |
+  Opam is a source-based package manager for OCaml. It supports multiple simultaneous compiler installations, flexible package constraints, and (optionally) a Git-friendly development workflow.
+
+  Typically, OPAM will probably make your life easier if you recognize yourself in at least one of these profiles
+
+  * You use multiple versions of the OCaml compiler, or you hack the compiler
+  yourself and needs to frequently switch between compiler versions.
+  * You use or develop software that needs a specific and/or modified version
+  of the OCaml compiler to be installed.
+  * You use or develop software that depends on a specific version of an OCaml
+  library, or you just want to install a specific version of a package, not
+  just the latest one.
+  * You want to create your own packages yourself, put them on your own
+  repository, with minimal effort.
+
+builddeps  :
+  - ocaml
+rundeps    :
+  - bubblewrap
+  - bzip2
+  - curl
+  - glibc
+  - unzip
+  - zlib
+setup      : |
+  %configure
+build      : |
+  %make -j1 lib-ext all \
+  OCAMLOPT='ocamlopt -O3 -compact'
+install    : |
+  %make_install

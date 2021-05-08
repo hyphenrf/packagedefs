@@ -1,0 +1,19 @@
+name       : python-rply
+version    : 0.7.7
+release    : 1
+source     :
+    - https://github.com/alex/rply/archive/v0.7.7.tar.gz : 64d6ef0341802ba955462dc89e35fa8e40f42fb12881f816fcb3421d7310eeba
+license    : BSD-3-Clause
+component  : programming.python
+summary    : A pure Python parser generator module
+description: |
+    A pure Python parser generator, that also works with RPython. It is a more-or-less direct port of David Beazley’s awesome PLY, with a new public API, and RPython support.
+builddeps  :
+    - pkgconfig(python3)
+    - python-setuptools
+rundeps    :
+    - python-appdirs
+build      : |
+    %python3_setup
+install    : |
+    %python3_install

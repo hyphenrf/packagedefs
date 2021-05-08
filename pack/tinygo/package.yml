@@ -1,0 +1,17 @@
+name       : tinygo
+version    : 0.15.0
+release    : 1
+source     :
+    - https://github.com/tinygo-org/tinygo/archive/v0.15.0.tar.gz : 090a43e2942cdef57753fca1a3e4c7994691a5fad20c160ba7723ff66b454777
+license    : BSD-3-Clause
+component  : programming
+summary    : Go compiler for small places
+description: |
+    TinyGo is a Go compiler intended for use in small places such as microcontrollers, WebAssembly (Wasm), and command-line tools.
+    It reuses libraries used by the Go language tools alongside LLVM to provide an alternative way to compile programs written in the Go programming language.
+
+clang      : yes
+builddeps  :
+    - golang
+install    : |
+    go install

@@ -1,0 +1,23 @@
+name       : drawterm-9front
+version    : 0.0
+release    : 1
+source     :
+    - https://code.9front.org/hg/drawterm/archive/tip.tar.gz : c1baaccc37474676fd67ade4f79a928764e9d7cee40c770c976ac5535d2f3dbd
+license    : LPL-1.02
+component  : network.remote
+summary    : 9front fork of drawterm
+description: |
+     This is a fork of Russ Cox's drawterm to incorporate features from Plan9front, most importantly DP9IK authentication support and the TLS based rcpu protocol.
+
+homepage   : http://drawterm.9front.org/
+builddeps  :
+    - pkgconfig(x11)
+    - pkgconfig(xt)
+build      : |
+    CONF=unix %make
+install    : |
+    i=$installdir
+    mkdir -p $i/usr/bin $i/usr/share/man/man1 $i/usr/share/licenses/drawterm-9front
+    install -Dm755 drawterm $i/usr/bin/drawterm
+    install -Dm644 drawterm.1 $i/usr/share/man/man1/drawterm.1
+    install -Dm644 LICENSE $i/usr/share/licenses/drawterm-9front/LICENSE

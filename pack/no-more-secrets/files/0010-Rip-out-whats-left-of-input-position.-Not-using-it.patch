@@ -1,0 +1,45 @@
+From a771cf32c12f5986ef54c1432c5db879806ffa3a Mon Sep 17 00:00:00 2001
+From: Brian Barto <bartobrian@gmail.com>
+Date: Wed, 24 Oct 2018 22:05:40 -0400
+Subject: [PATCH 10/15] Rip out whats left of input position. Not using it.
+
+	modified:   src/nmseffect.c
+---
+ src/nmseffect.c | 14 --------------
+ 1 file changed, 14 deletions(-)
+
+diff --git a/src/nmseffect.c b/src/nmseffect.c
+index 176e862..1883d91 100644
+--- a/src/nmseffect.c
++++ b/src/nmseffect.c
+@@ -35,8 +35,6 @@
+ static int autoDecrypt      = 0;            // Auto-decrypt flag
+ static int maskBlank        = 0;            // Mask blank spaces
+ static int colorOn          = 1;            // Terminal color flag
+-static int inputPositionX   = -1;           // X coordinate for input position
+-static int inputPositionY   = -1;           // Y coordinate for input position
+ 
+ // Character attribute structure, linked list. Keeps track of every
+ // character's attributes required for rendering and decryption effect.
+@@ -355,18 +353,6 @@ void nmseffect_set_color(int setting) {
+ 		colorOn = 0;
+ }
+ 
+-/*
+- * Set the desired coordinates of the cursor in the terminal window when
+- * nmseffect_exec() gets the character selection from the user that is set
+- * with nmseffect_set_returnopts().
+- */
+-void nmseffect_set_input_position(int x, int y) {
+-	if (x >= 0 && y >= 0) {
+-		inputPositionX = x;
+-		inputPositionY = y;
+-	}
+-}
+-
+ /*
+  * Sleep for the number of milliseconds indicated by argument 't'.
+  */
+-- 
+2.26.0
+

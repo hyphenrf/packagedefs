@@ -1,0 +1,24 @@
+From c40219a6885be0b05250eb50a31a736bec89ba8e Mon Sep 17 00:00:00 2001
+From: Greg Steuck <greg@nest.cx>
+Date: Sun, 6 Jan 2019 16:38:16 -0800
+Subject: [PATCH 1/4] Add limits.h include to provide INT_MAX.
+
+Otherwise test build is failing on OpenBSD.
+---
+ tests/test_common_openssl.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/test_common_openssl.c b/tests/test_common_openssl.c
+index abcb208..ab5dc9b 100644
+--- a/tests/test_common_openssl.c
++++ b/tests/test_common_openssl.c
+@@ -1,5 +1,6 @@
+ #include "test_common.h"
+ 
++#include <limits.h>
+ #include <openssl/opensslv.h>
+ #include <openssl/evp.h>
+ #include <openssl/hmac.h>
+-- 
+2.25.0
+

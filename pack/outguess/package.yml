@@ -1,0 +1,21 @@
+name       : outguess
+version    : 0.2.2
+release    : 1
+source     :
+    - https://github.com/resurrecting-open-source-projects/outguess/archive/0.2.2.tar.gz : 0d873d255d6c7c564f4245af34c480bfc8f7ae56b1ed8bb97850487c1000f5a4
+license    : BSD-4-Clause
+component  : system.utils
+summary    : A universal steganographic tool
+description: |
+    OutGuess is a universal tool for steganography that allows the insertion of hidden information into the redundant bits of data sources. The supported formats are JPEG, PPM and PNM.
+setup      : |
+    %patch -p1 <$pkgfiles/0001-proper-configuration.patch
+    pushd jpeg-6b-steg
+      ln jconfig.cfg jconfig.h
+    popd
+    %configure
+build      : |
+    %make
+install    : |
+    mkdir -p $installdir/usr/bin $installdir/usr/share/man/man1
+    %make_install install_prefix=$installdir prefix=%PREFIX%

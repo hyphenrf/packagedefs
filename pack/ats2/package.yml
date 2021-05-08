@@ -1,0 +1,103 @@
+name       : ats2
+version    : 0.4.0_alpha1
+release    : 1
+source     :
+    - https://downloads.sourceforge.net/project/ats2-lang/ats2-lang/ats2-postiats-0.4.0/ATS2-Postiats-0.4.0.tgz : a749b62d429eda45ec304075f1743e1a2638c4772d37b579839d7797470869c0
+    - https://github.com/githwxi/ATS-Postiats-contrib/archive/v0.2.11.tar.gz: 3aff2f1eabae38ff8e00057fd48ac15ba311832a943c3936f892cc93dbdf41b2
+license    : 
+    - GPL-3.0
+component  : 
+    - programming
+    - contrib: programming.devel
+summary    : 
+    - ATS2/Postiats, a statically-typed functional systems programming language
+    - contrib: External library contributions and projects by the ATS community for ATS2/Postiats.
+description: 
+    - "NOTE: This language is suceptable to api breaking, semantic changes, and\n
+    experimental features, hence being considered alpha release in our repos.\n
+
+    ATS (Applied Type System) is a high-performance Functional programming language\n
+    from the ML family. Its performance and memory-efficiency is on par with C. It\n
+    uses a highly expressive type system that supports both linear and dependent\n
+    typing.\n
+    While it is call-by-value Functional at its core, it also supports Imperative\n
+    style via theorem-proving linear data types. This allows for completely safe\n
+    and verifiable memory allocation/deallocation and pointer arithmatic. Which is\n
+    essential for implementing low-level realtime systems.\n
+    ATS also supports Concurrent programming via safe pthreads, and has a simple\n
+    yet effective Modula-3 inspired modules system.\n
+
+    In addition, ATS contains a subsystem ATS/LF (Logical Framework) that supports\n
+    a form of (interactive) theorem-proving, where proofs are constructed as total\n
+    functions. Used for encoding various formal systems (such as logic systems and\n
+    type systems) together with proofs of their (meta-)properties.\n
+
+    This package contains the compiler patsopt and the frontends patscc, myatscc\n"
+    - contrib: External library contributions and projects by the ATS community for ATS2/Postiats.
+
+optimize   :
+    - speed
+    - lto
+
+extract: no
+environment: |
+    shopt -s dotglob globstar extglob 
+    VER=%version%
+    VER=${VER%%_*}
+    CVER=v0.2.11
+    PROFD=/usr/share/defaults/etc/profile.d/
+    PATSHOME=%libdir%/ats2-postiats-$VER
+
+patterns   :
+    - contrib:
+        # - version: 0.2.11_alpha
+        # - license: [MIT, BSD-3-Clause, GPL-3.0]
+        - /usr/lib64/ats*/EXTRAS
+        - /usr/share/defaults/etc/profile.d/*contrib*.sh
+          
+# TODO:
+#  - split contrib packages to separate libs
+#  - split files defined in ats-include tar into devel
+#  - add a docs subpackage that has the book, tutorial, and examples
+rundeps    :
+    - bdwgc-devel #ensuring memory safety for non-functional implementations TODO: bdwgc-devel?
+    - gcc
+    - contrib:
+        - libgtk-3-devel #contrib/GTK
+        - json-c-devel #contrib/json-c
+        - jansson-devel #contrib/jansson
+        - libev-devel #contrib/libev
+builddeps  :
+    - gmp-devel
+
+setup      : |
+    tar xzf $sources/ATS2-Postiats-$VER.tgz
+    pushd ATS2-Postiats-$VER
+    mkdir EXTRAS
+    pushd EXTRAS
+        tar xzf $sources/$CVER.tar.gz
+        for entry in contrib document share projects README.md Makefile_test
+        do
+            mv ATS-Postiats-contrib-*/$entry .
+        done
+        rm -rf ATS-Postiats-contrib-*
+    popd
+    %apply_patches
+    %autogen
+    %configure CFLAGS="${CFLAGS}"
+build      : |
+    %make -j1
+install    : |
+    %make_install -j1
+    mv EXTRAS -t $installdir/usr/lib/ats*/
+    mv $installdir/usr/lib $installdir/usr/lib64
+
+    mkdir -p $installdir/$PROFD
+    cat <<. >$installdir/$PROFD/ats2-00.sh
+    export PATSHOME="$PATSHOME"
+    export PATH="\$PATSHOME/bin:\$PATH"
+    .
+    cat <<. >$installdir/$PROFD/ats2-01-contrib.sh
+    export PATSHOMERELOC="\$PATSHOME"
+    export PATSCONTRIB="\$PATSHOME/EXTRAS"
+    .

@@ -1,0 +1,83 @@
+From 91c161baf02d3afe14b6c9792b8bdb1390b1c2c1 Mon Sep 17 00:00:00 2001
+From: Greg Steuck <blackgnezdo@gmail.com>
+Date: Sun, 6 Jan 2019 22:23:21 -0800
+Subject: [PATCH 2/4] Introduce srand_deterministic to match OpenBSD (#120)
+
+* Introduce srand_deterministic to match OpenBSD
+
+Makes explicit deterministic seeding of PRNG obvious.
+
+Fixes #119
+---
+ tests/test_common.c          | 8 ++++++++
+ tests/test_common.h          | 6 ++++++
+ tests/test_session_builder.c | 4 ++--
+ tests/test_session_cipher.c  | 4 ++--
+ 4 files changed, 18 insertions(+), 4 deletions(-)
+
+diff --git a/tests/test_common.c b/tests/test_common.c
+index f15003c..03f95ee 100644
+--- a/tests/test_common.c
++++ b/tests/test_common.c
+@@ -845,3 +845,11 @@ void setup_test_sender_key_store(signal_protocol_store_context *context, signal_
+ 
+     signal_protocol_store_context_set_sender_key_store(context, &store);
+ }
++
++#ifndef __OpenBSD__
++void srand_deterministic(unsigned int seed)
++{
++    srand(seed);
++}
++#endif
++
+diff --git a/tests/test_common.h b/tests/test_common.h
+index 66ddc6a..db54c12 100644
+--- a/tests/test_common.h
++++ b/tests/test_common.h
+@@ -84,4 +84,10 @@ int test_sender_key_store_load_sender_key(signal_buffer **record, signal_buffer
+ void test_sender_key_store_destroy(void *user_data);
+ void setup_test_sender_key_store(signal_protocol_store_context *context, signal_context *global_context);
+ 
++/* Portability */
++#ifndef __OpenBSD__
++/* OpenBSD extension */
++void srand_deterministic(unsigned int seed);
++#endif
++
+ #endif /* TEST_COMMON_H */
+diff --git a/tests/test_session_builder.c b/tests/test_session_builder.c
+index 5c475c6..cc388cd 100644
+--- a/tests/test_session_builder.c
++++ b/tests/test_session_builder.c
+@@ -1426,9 +1426,9 @@ void run_interaction(signal_protocol_store_context *alice_store, signal_protocol
+     }
+ 
+     time_t seed = time(0);
+-    srand(seed);
++    srand_deterministic(seed);
+     shuffle_buffers(alice_ooo_plaintext, 10);
+-    srand(seed);
++    srand_deterministic(seed);
+     shuffle_buffers(alice_ooo_ciphertext, 10);
+     fprintf(stderr, "Shuffled Alice->Bob messages created\n");
+ 
+diff --git a/tests/test_session_cipher.c b/tests/test_session_cipher.c
+index e761fda..419f87a 100644
+--- a/tests/test_session_cipher.c
++++ b/tests/test_session_cipher.c
+@@ -206,9 +206,9 @@ void generate_test_message_collections(session_cipher *cipher, signal_buffer **p
+ 
+     /* Randomize the two arrays using the same seed */
+     time_t seed = time(0);
+-    srand(seed);
++    srand_deterministic(seed);
+     shuffle_buffers(plaintext_messages, size);
+-    srand(seed);
++    srand_deterministic(seed);
+     shuffle_buffers(ciphertext_messages, size);
+ }
+ 
+-- 
+2.25.0
+

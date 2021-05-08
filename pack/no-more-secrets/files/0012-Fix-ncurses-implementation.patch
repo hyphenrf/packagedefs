@@ -1,0 +1,45 @@
+From 61f1f6cfc42865a4ac17750414a90e6a83fb7018 Mon Sep 17 00:00:00 2001
+From: Brian Barto <bartobrian@gmail.com>
+Date: Wed, 24 Oct 2018 22:47:26 -0400
+Subject: [PATCH 12/15] Fix ncurses implementation
+
+	modified:   Makefile
+	modified:   NCURSES.md
+---
+ Makefile   | 4 ++--
+ NCURSES.md | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index c96efa1..4394cdd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -28,10 +28,10 @@ all: nms sneakers
+ all-ncurses: nms-ncurses sneakers-ncurses
+ 
+ nms-ncurses: $(OBJ)/input.o $(OBJ)/error.o $(OBJ)/nmscharset.o $(OBJ)/nmstermio_ncurses.o $(OBJ)/nmseffect.o $(OBJ)/nms.o | $(BIN)
+-	$(CC) $(CFLAGS) -o $(BIN)/nms $^ -lncurses
++	$(CC) $(CFLAGS) -o $(BIN)/nms $^ -lncursesw
+ 
+ sneakers-ncurses: $(OBJ)/nmscharset.o $(OBJ)/nmstermio_ncurses.o $(OBJ)/nmseffect.o $(OBJ)/sneakers.o | $(BIN)
+-	$(CC) $(CFLAGS) -o $(BIN)/sneakers $^ -lncurses
++	$(CC) $(CFLAGS) -o $(BIN)/sneakers $^ -lncursesw
+ 
+ $(OBJ)/%.o: $(SRC)/%.c | $(OBJ)
+ 	$(CC) $(CFLAGS) -o $@ -c $<
+diff --git a/NCURSES.md b/NCURSES.md
+index 11e12e3..cb4119a 100644
+--- a/NCURSES.md
++++ b/NCURSES.md
+@@ -8,7 +8,7 @@ operating systems.
+ 
+ ```
+ sudo apt-get update
+-sudo apt-get install lib32ncurses5-dev
++sudo apt-get install lib32ncursesw5-dev
+ ```
+ 
+ #### Fedora Linux
+-- 
+2.26.0
+

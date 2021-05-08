@@ -1,0 +1,24 @@
+name       : haskell-math-functions
+version    : 0.3.3.0
+release    : 1
+source     :
+    - https://hackage.haskell.org/package/math-functions-0.3.3.0/math-functions-0.3.3.0.tar.gz : 63c599ea76a4cd7fc41d564a37c09d1f7806085f48028bc02779300d885eb6e8
+license    : BSD-3-Clause
+component  : programming.haskell
+summary    : Collection of tools for numeric computations
+description: This library contain collection of various utilities for numerical computing. So far there're special mathematical functions, compensated summation algorithm, summation of series, root finding for real functions, polynomial summation and Chebyshev polynomials.
+networking : yes
+builddeps  :
+    - ghc
+    - haskell-cabal-install
+    - haskell-vector
+    - haskell-primitive
+    - haskell-data-default-class
+    - haskell-vector-th-unbox
+setup      : |
+    %cabal_configure
+build      : |
+    %cabal_build
+install    : |
+    %cabal_install
+    %cabal_register

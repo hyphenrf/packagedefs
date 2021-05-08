@@ -1,0 +1,21 @@
+name       : rc
+version    : 1.7.4
+release    : 1
+source     :
+    - https://github.com/rakitzis/rc/archive/v1.7.4.tar.gz : 0b83f8698dd8ef44ca97b25c4748c087133f53c7fff39b6b70dab65931def8b0
+license    : BSD-3-Clause
+component  : system.utils
+summary    : Plan9 shell ported to UNIX
+description: |
+    Plan9 shell ported to UNIX
+builddeps  :
+    - readline-devel
+setup      : |
+    sh bootstrap
+    %configure
+build      : |
+    %make
+install    : |
+    %make_install
+    mkdir -p $installdir/bin/
+    ln -sr $installdir/usr/bin/rc $installdir/bin/rc

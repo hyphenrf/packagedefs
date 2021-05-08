@@ -1,0 +1,25 @@
+name       : haskell-bimap
+version    : 0.2.4
+release    : 1
+source     :
+    - https://hackage.haskell.org/package/bimap-0.4.0/bimap-0.4.0.tar.gz : d1a39686abbfed5864a8fb778d2244825b6eac977e130e7c1212e6d3a68f249d
+license    : BSD-3-Clause
+component  : programming.haskell
+summary    : A Bidirectional Map implementation
+description: "A data structure representing a bidirectional mapping between two key\
+    \ types. \nEach value in the bimap is associated with exactly one value of the\
+    \ opposite type.\n"
+
+networking : yes
+builddeps  :
+    - ghc
+    - haskell-stm
+    - haskell-exceptions
+    - haskell-cabal-install
+setup      : |
+    %cabal_configure
+build      : |
+    %cabal_build
+install    : |
+    %cabal_install
+    %cabal_register

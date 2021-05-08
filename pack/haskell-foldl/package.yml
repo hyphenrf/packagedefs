@@ -1,0 +1,33 @@
+name       : haskell-foldl
+version    : 1.4.6
+release    : 1
+source     :
+    - https://hackage.haskell.org/package/foldl-1.4.6/foldl-1.4.6.tar.gz : 2a14aae99eb30344c983b8a07e0c2e5999d097042951e9349eb32d0f388a04aa
+license    : BSD-3-Clause
+component  : programming.haskell
+summary    : Composable, streaming, and efficient left folds
+description: |
+    This library provides strict left folds that stream in constant memory, and you can combine folds using Applicative style to derive new folds. Derived folds still traverse the container just once and are often as efficient as hand-written folds.
+networking : yes
+builddeps  :
+    - ghc
+    - haskell-cabal-install
+    - haskell-comonad
+    - haskell-contravariant
+    - haskell-hashable
+    - haskell-primitive
+    - haskell-profunctors
+    - haskell-semigroupoids
+    - haskell-semigroups
+    - haskell-text
+    - haskell-unordered-containers
+    - haskell-vector
+    - haskell-vector-builder
+    - haskell-mwc-random
+setup      : |
+    %cabal_configure
+build      : |
+    %cabal_build
+install    : |
+    %cabal_install
+    %cabal_register

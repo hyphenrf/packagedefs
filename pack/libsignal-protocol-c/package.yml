@@ -1,0 +1,21 @@
+name       : libsignal-protocol-c
+version    : 2.3.2_p1
+release    : 3
+source     :
+    - https://github.com/signalapp/libsignal-protocol-c/archive/v2.3.2.tar.gz : f3826f3045352e14027611c95449bfcfe39bfd3d093d578c70f70eee0c85000d
+license    : GPL-3.0-or-later
+summary    : Signal Protocol C Library
+component  : security.library
+description: |
+    This is a ratcheting forward secrecy protocol that works in synchronous and asynchronous messaging environments.
+setup      : |
+    for pf in $pkgfiles/*
+    do
+        %patch -p1 < $pf
+    done
+    %cmake
+make       : |
+    $make
+install    : |
+    %make_install
+

@@ -1,0 +1,21 @@
+name       : qview
+version    : 3.0
+release    : 1
+source     :
+    - https://github.com/jurplel/qView/archive/3.0.tar.gz : 0c4814171c787aa361e7c1da81babad86c6aa72a42247eab537b307a7b36a24d
+license    : GPL-3.0-or-later
+component  : multimedia.graphics
+homepage   : https://interversehq.com/qview/
+summary    : Practical and minimal Qt Image Viewer
+description: |
+    qView is an image viewer designed with minimalism and usability in mind.
+    It has no toolbars or distractions — pure space efficiency. All while not compromising on features.
+builddeps  :
+    - pkgconfig(Qt5Core)
+setup      : |
+    %qmake
+build      : |
+    %make
+install    : |
+    %make_install INSTALL_ROOT="$installdir"
+

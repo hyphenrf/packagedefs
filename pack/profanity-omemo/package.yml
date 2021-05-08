@@ -1,0 +1,41 @@
+name       : profanity-omemo
+version    : 0.8.1
+release    : 5
+source     :
+    - https://github.com/boothj5/profanity/releases/download/0.8.1/profanity-0.8.1.tar.gz : 6b7ff1f0f1b54ed3a55efce40237db775fe9475af276e5e4ed342e91a3e8d997
+license    : GPL-3.0-or-later
+component  : network.im
+summary    : Profanity - A console based XMPP client
+description: |
+    Profanity is a console based XMPP client written in C using ncurses and libstrophe, inspired by Irssi.
+    Feautres:
+    - Supports XMPP chat services, including GoogleTalk
+    - MUC chat room support
+    - OTR and PGP encryption
+    - Roster management
+    - Flexible resource and priority settings
+    - Desktop notifications
+    - Plugins in Python and C
+builddeps  :
+    # - pkgconfig(cmocka)     # check
+    - pkgconfig(glib-2.0)
+    - pkgconfig(gtk+-2.0)
+    - pkgconfig(libcurl)
+    - pkgconfig(libnotify)
+    - pkgconfig(libotr)
+    - pkgconfig(libstrophe)
+    - pkgconfig(ncursesw)
+    - pkgconfig(python3)
+    - pkgconfig(xscrnsaver) # idle time
+    - pkgconfig(gpgme) # pgp
+    - pkgconfig(libassuan) # omemo
+    - pkgconfig(libsignal-protocol-c) # omemo
+    - libgcrypt-devel
+setup      : |
+    %configure PYTHON_VERSION=%python3_version% 
+build      : |
+    %make
+install    : |
+    %make_install
+# check      : |
+#     %make check

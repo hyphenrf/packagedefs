@@ -1,0 +1,23 @@
+name       : no-more-secrets
+version    : 0.3.3_p1
+release    : 1
+source     :
+    - https://github.com/bartobri/no-more-secrets/archive/v0.3.3.tar.gz : cfcf408768c6b335780e46a84fbc121a649c4b87e0564fc972270e96630efdce
+license    : GPL-3.0
+component  : desktop
+summary    : A command line tool that recreates the famous data decryption effect seen in the 1992 movie Sneakers.
+description:
+    - "A command line tool that recreates the famous data decryption effect seen in the 1992 movie Sneakers.\nProvides the main nms executable."
+    - sneakers: "A command line tool that recreates the famous data decryption effect seen in the 1992 movie Sneakers.\nProvides the sneakers executable."
+patterns   :
+    - sneakers: 
+      - /usr/bin/sneakers
+      - /usr/share/man/man*/sneakers*
+
+rundeps: [sneakers: [no-more-secrets]]
+setup      : |
+    %apply_patches
+build      : |
+    %make all
+install    : |
+    %make_install prefix=%PREFIX%

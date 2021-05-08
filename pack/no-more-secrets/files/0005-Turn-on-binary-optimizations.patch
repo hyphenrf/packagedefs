@@ -1,0 +1,25 @@
+From ca408b79b83203e1308ff23a8adf3d809f08bcc7 Mon Sep 17 00:00:00 2001
+From: Gergely Budai <Thuffir@users.noreply.github.com>
+Date: Wed, 8 Aug 2018 13:19:01 +0200
+Subject: [PATCH 05/15] Turn on binary optimizations.
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 3f635fe..3798818 100644
+--- a/Makefile
++++ b/Makefile
+@@ -13,7 +13,7 @@ OBJ=obj
+ SRC=src
+ 
+ CC ?= gcc
+-CFLAGS ?= -Wextra -Wall
++CFLAGS ?= -Wextra -Wall -O2
+ 
+ .PHONY: all install uninstall clean
+ 
+-- 
+2.26.0
+

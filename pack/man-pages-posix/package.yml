@@ -1,0 +1,16 @@
+name       : man-pages-posix
+version    : 2013
+release    : 1
+source     :
+    - https://mirrors.edge.kernel.org/pub/linux/docs/man-pages/man-pages-posix/man-pages-posix-2013-a.tar.gz : 77de3cc94de6312d2b18d4bfd53b8922456688212dbfdee3ede6191f400a4b29
+license    : CUSTOM-COPYLEFT
+component  : system.utils
+summary    : POSIX manual pages
+description: |
+    This package contains the IEEE Std 1003.1-2008 (POSIX.1) manual pages including the corrections contained in the first Technical Corrigendum, IEEE Std 1003.1-2008/Cor 1-2013. It include manuals for utilities in section 1p, and for functions and headers in sections 3p and 0p respectively.
+build      : |
+    %make screen
+    %make gz
+install    : |
+    %make_install
+    install -D -m644 POSIX-COPYRIGHT "$installdir/usr/share/licenses/man-pages-posix/POSIX-COPYRIGHT" 

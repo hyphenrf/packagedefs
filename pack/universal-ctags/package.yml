@@ -1,0 +1,26 @@
+name       : universal-ctags
+version    : 0.0
+release    : 2
+source     :
+    - git|https://github.com/universal-ctags/ctags : 3292b1f6bc71bbd45bf4257baad1ae8a4c0568fe
+license    : GPL-2
+component  : programming.tools
+summary    : Generates an index file of language objects found in source files
+description: |
+    This is a maintained ctags implementation. Generates an index file of language objects found in source files
+homepage   : https://ctags.io
+
+replaces   : ctags
+
+builddeps  :
+    - python-docutils
+    - pkgconfig(libxml-2.0)
+    - pkgconfig(yaml-0.1)
+    - pkgconfig(jansson)
+    - pkgconfig(libseccomp)
+setup      : |
+    %autogen
+build      : |
+    %make
+install    : |
+    %make_install

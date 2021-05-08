@@ -1,0 +1,23 @@
+name       : tor-obfs4
+version    : 0.0.11
+release    : 1
+source     :
+  - https://gitlab.com/yawning/obfs4/-/archive/obfs4proxy-0.0.11/obfs4-obfs4proxy-0.0.11.tar.gz : 46f621f1d94d244e7b1d0b93dafea7abadb2428f8b1d0463559426362ea98eae
+license    : GPL-3.0
+summary    : The obfourscator
+component  : security
+description: |
+  This is a look-like nothing obfuscation protocol that incorporates ideas and concepts from Philipp Winter's ScrambleSuit protocol.  The obfs naming was chosen primarily because it was shorter, in terms of protocol ancestery obfs4 is much closer to ScrambleSuit than obfs2/obfs3.
+homepage   : https://gitlab.com/yawning/obfs4
+
+networking : yes
+builddeps  :
+  - golang
+
+setup      : |
+  %apply_patches
+build      : |
+  go build -o obfs4proxy/obfs4proxy ./obfs4proxy
+install    : |
+  install -Dm 00755 obfs4proxy/obfs4proxy $installdir/usr/bin/obfs4proxy
+

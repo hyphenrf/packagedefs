@@ -1,0 +1,25 @@
+name       : kristall
+version    : 0.3
+release    : 1
+source     :
+    - https://github.com/MasterQ32/kristall/archive/V0.3.tar.gz : 24733402e0e3924459222c87aa2137139ff8ae10410a2a88d56455c5ec172368
+license    : GPL-3.0-only
+component  : network.web.browser
+summary    : A high-quality Qt gemini/gopher browser with HTTPS capabilities.
+description: |
+    This little browser features multi-protocol support, document rendering, tls management, favourites, tabs, history, and colour themeing with special link highlighting.
+homepage   : https://kristall.random-projects.net/
+
+builddeps  :
+    - pkgconfig(Qt5Core)
+    - pkgconfig(Qt5Multimedia)
+    - pkgconfig(Qt5Svg)
+
+setup      : |
+    mv $pkgfiles/Makefile.new Makefile
+build      : |
+    %make
+install    : |
+    # sed -i "s/net.random-projects.//" Kristall.desktop
+
+    %make_install PREFIX=%PREFIX%

@@ -1,0 +1,22 @@
+name       : bloat
+version    : 0.0
+release    : 1
+source     :
+  - https://git.freesoftwareextremist.com/bloat/snapshot/bloat-7a59d010f6d07bcfb074e60f1f06b002c4bf7b74.tar.gz : 574fa583543e7c09ffe3293d903a12329df161d1e3a4e5b6df2edffb17eccc2a
+license    : CC0-1.0
+component  : network.web
+summary    : A web client for Mastodon Network
+description: |
+    A web front-end for fediverse servers that does not require JavaScript to display text, images, audio and videos.
+environment :
+    export PREFIX=%PREFIX%
+builddeps  :
+    - golang
+setup      : |
+    %apply_patches
+build      : |
+    %make
+install    : |
+    %make_install
+    sed '1i#default location: /etc/bloat.conf' bloat.def.conf \
+      > $installdir/usr/share/bloat/default.conf

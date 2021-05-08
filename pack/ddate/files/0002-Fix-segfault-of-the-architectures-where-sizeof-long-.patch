@@ -1,0 +1,26 @@
+From ac96f5555247c7a735daed1a8e1b4fa18560ab52 Mon Sep 17 00:00:00 2001
+From: Denis Bychkov <manover@gmail.com>
+Date: Fri, 22 May 2015 00:14:55 -0400
+Subject: [PATCH 2/3] Fix segfault of the architectures where sizeof(long) !=
+ sizeof(time_t)
+
+---
+ ddate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ddate.c b/ddate.c
+index 4c2a0f8..c0a6bf3 100644
+--- a/ddate.c
++++ b/ddate.c
+@@ -183,7 +183,7 @@ struct disc_time makeday(int,int,int);
+ 
+ int
+ main (int argc, char *argv[]) {
+-    long t;
++    time_t t;
+     struct tm *eris;
+     int bob,raw;
+     struct disc_time hastur;
+-- 
+2.25.0
+

@@ -1,0 +1,26 @@
+name       : ddate
+version    : 0.2.2_p1
+release    : 4
+source     :
+    - https://github.com/bo0ts/ddate/archive/v0.2.2.tar.gz : d53c3f0af845045f39d6d633d295fd4efbe2a792fd0d04d25d44725d11c678ad
+license    : Unlicense
+component  : system.utils
+summary    : PERPETUAL DATE CONVERTER FROM GREGORIAN TO POEE CALENDAR
+description: "SACRED DOCUMENT OF THE FROGS (old Erisian poem): \n73 Days hath Chaos,\
+    \ Discord, Confusion, Bureaucracy, and Aftermath\nThis is exactly the same ddate\
+    \ version that can be found in the util-linux\n2.20 release. It is here, because\
+    \ util-linux doesn’t build ddate by default\nanymore.\n"
+builddeps  :
+    - cmake
+rundeps    :
+    - glibc
+setup      : |
+    for pf in $pkgfiles/*
+    do
+        %patch -p1 < $pf
+    done
+    %cmake
+build      : |
+    %make
+install    : |
+    %make_install

@@ -1,0 +1,25 @@
+From 0083509c9909ffcf1809c4a309070e114f447296 Mon Sep 17 00:00:00 2001
+From: nobody <null@glob.sh>
+Date: Thu, 20 Feb 2020 13:55:34 +0200
+Subject: [PATCH] enable slang in configuration
+
+---
+ ddate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ddate.c b/ddate.c
+index c0a6bf3..2732264 100644
+--- a/ddate.c
++++ b/ddate.c
+@@ -68,7 +68,7 @@
+ 
+ /* If you wish ddate(1) to contain SubGenius slogans, define PRAISE_BOB */
+ 
+-/*#define PRAISE_BOB 13013*/
++#define PRAISE_BOB 13013
+ 
+ #include <stdlib.h>
+ #include <string.h>
+-- 
+2.25.0
+

@@ -1,0 +1,26 @@
+From db146f5563c83f8ee7332773e06e861c126872b1 Mon Sep 17 00:00:00 2001
+From: miroatme <poetseye@gmail.com>
+Date: Tue, 21 Jun 2016 16:57:50 -0700
+Subject: [PATCH 3/3] '%Y' added to man page
+
+The description for %Y is missing in the current man page. It is there in the examples but not in the list of string format mechanisms.
+---
+ ddate.1 | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/ddate.1 b/ddate.1
+index ec4ee81..c340578 100644
+--- a/ddate.1
++++ b/ddate.1
+@@ -47,6 +47,8 @@ Tab
+ .IP %X
+ Number of days remaining until X-Day. (Not valid if the SubGenius options
+ are not compiled in.)
++.IP %Y
++The year of our Lady Discord (i.e., 3182)
+ .IP %{
+ .IP %}
+ Used to enclose the part of the string which is to be replaced with the
+-- 
+2.25.0
+

@@ -1,0 +1,33 @@
+name       : zig
+version    : 0.5.0
+release    : 1
+source     :
+    - https://ziglang.org/download/0.5.0/zig-0.5.0.tar.xz : 55ae16960f152bcb9cf98b4f8570902d0e559a141abf927f0d3555b7cc838a31
+license    : MIT
+component  : programming
+homepage   : https://ziglang.org/
+summary    : a general-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
+description: |
+  Small and simple language with first-class focus on performance, safety, tooling, cross-compilation, and portability. Zig competes with C instead of depending on it.
+
+clang      : yes
+patterns   :
+  - libc-musl: /usr/lib*/zig/libc/musl
+  - libc-mingw: /usr/lib*/zig/libc/mingw
+  - libc-glibc: /usr/lib*/zig/libc/glibc
+  - libc-cxx: /usr/lib*/zig/libcxx
+  - libc-devel: /usr/lib*/zig/libc/include
+  - abi-devel: /usr/lib*/zig/include
+  - libunwind-devel: /usr/lib*/zig/libunwind
+
+environment: |
+  export CXXFLAGS=""
+setup      : |
+    %patch -p1 < $pkgfiles/*.patch
+build      : |
+    %cmake \
+      -DZIG_PREFER_CLANG_CPP_DYLIB=ON \
+      # -DCMAKE_BUILD_TYPE=RELWITHDEBINFO \
+
+install    : |
+    %make_install

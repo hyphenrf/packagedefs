@@ -1,0 +1,23 @@
+name       : tcc-git
+version    : 9.27
+release    : 1
+source     :
+    - https://repo.or.cz/tinycc.git/snapshot/58be11f701f44d1f4e06fb66d57527d82ca48296.tar.gz : e1ac6f65fb341973e78c97b838e361a126601dc9bd498d6f7f92211b1919e866
+license    : LGPL-2.1
+
+component  : programming
+summary    : Tiny C Compiler (tinycc)
+description: Tiny C Compiler and toolchain
+
+clang: yes
+environment:
+    CC=clang
+    CPP=clang-cpp
+setup      : |
+    %configure --cc=$CC
+build      : |
+    %make
+install    : |
+    %make_install
+check: |
+    %make -j1 test

@@ -1,0 +1,18 @@
+name       : ucblogo
+version    : 6.2.1
+release    : 1
+source     :
+    - https://github.com/jrincayc/ucblogo-code/releases/download/version_6.2.1/ucblogo-6.2.1.tar.gz : 6ff5319ab21a834d570123e3fa552c13555cb11d9e5dd5025415a1c4c18c886e
+license    : GPL-3.0-or-later
+component  : games
+summary    : A LOGO interpreter by UCBerkely for drawing turtle graphics
+description: |
+    A LOGO interpreter by UCBerkely for drawing turtle graphics
+# builddeps  :
+setup      : |
+    %configure
+build      : |
+    %make
+install    : |
+    %make_install
+    ln -sr $installdir/usr/bin/{ucblogo,logo}

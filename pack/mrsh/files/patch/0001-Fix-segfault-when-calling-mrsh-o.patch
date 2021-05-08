@@ -1,0 +1,34 @@
+From 96f2966620be5bec422cf0732098a6ad756c4881 Mon Sep 17 00:00:00 2001
+From: Haz <hyphens@pm.me>
+Date: Tue, 14 Jul 2020 00:05:52 +0200
+Subject: [PATCH] Fix segfault when calling `mrsh -o`
+
+* at main.c:23 we call mrsh_process_args from builtins/set.c
+* that function calls set function impl. in the same file.
+* set function returns early in its switch block commandline arg `-o`
+  when called without a long option.
+* this might be the desired behaviour, but it skips populating
+  state->frame
+* the code responsible for that is after the switch statement
+
+proposed solution: populate state->frame before returning
+---
+ builtin/set.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/builtin/set.c b/builtin/set.c
+index 06a0427..6bcc097 100644
+--- a/builtin/set.c
++++ b/builtin/set.c
+@@ -135,6 +135,8 @@ static int set(struct mrsh_state *state, int argc, char *argv[],
+ 		case 'o':
+ 			if (i + 1 == argc) {
+ 				print_options(state);
++				state->frame->argc = i + 1;
++				state->frame->argv = argv_dup(strdup(argv[0]), argc, argv);
+ 				return 0;
+ 			}
+ 			option = find_long_option(argv[i + 1]);
+-- 
+2.27.0
+

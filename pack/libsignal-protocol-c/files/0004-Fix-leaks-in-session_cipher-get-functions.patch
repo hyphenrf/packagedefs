@@ -1,0 +1,33 @@
+From 71954c53860b83e358c9d8c4898d003f16ace375 Mon Sep 17 00:00:00 2001
+From: Derek Konigsberg <dkonigsberg@logicprobe.org>
+Date: Sat, 25 May 2019 14:46:50 -0700
+Subject: [PATCH 4/4] Fix leaks in session_cipher get functions
+
+Fixes #127
+---
+ src/session_cipher.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/session_cipher.c b/src/session_cipher.c
+index 3f5dcab..f705509 100644
+--- a/src/session_cipher.c
++++ b/src/session_cipher.c
+@@ -744,6 +744,7 @@ int session_cipher_get_remote_registration_id(session_cipher *cipher, uint32_t *
+     id_result = session_state_get_remote_registration_id(state);
+ 
+ complete:
++    SIGNAL_UNREF(record);
+     if(result >= 0) {
+         *remote_id = id_result;
+     }
+@@ -784,6 +785,7 @@ int session_cipher_get_session_version(session_cipher *cipher, uint32_t *version
+     version_result = session_state_get_session_version(state);
+ 
+ complete:
++    SIGNAL_UNREF(record);
+     if(result >= 0) {
+         *version = version_result;
+     }
+-- 
+2.25.0
+

@@ -1,0 +1,21 @@
+name       : haskell-optional-args
+version    : 1.0.2
+release    : 1
+source     :
+    - https://hackage.haskell.org/package/optional-args-1.0.2/optional-args-1.0.2.tar.gz : 2e3454ad77cba80b15c02dbe1915889fafa81a22deb7fe5e7e01b0dd8d85b0e4
+license    : BSD-3-Clause
+component  : programming.haskell
+summary    : Optional function arguments
+description: This library provides a type for specifying Optional function arguments
+networking : yes
+builddeps  :
+    - ghc
+    - haskell-cabal-install
+    - haskell-semigroups
+setup      : |
+    %cabal_configure
+build      : |
+    %cabal_build
+install    : |
+    %cabal_install
+    %cabal_register

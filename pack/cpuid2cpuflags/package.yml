@@ -1,0 +1,18 @@
+name       : cpuid2cpuflags
+version    : 10
+release    : 1
+source     :
+    - https://github.com/mgorny/cpuid2cpuflags/releases/download/v10/cpuid2cpuflags-10.tar.bz2 : 1d72ba3c1d3a6baf637feccaa01b8ec2894809473de11ceb7a00cecef627ac6b
+license    : BSD-2-Clause
+component  : system.devel
+summary    : Simple tool to obtain CPU_FLAGS_* for your CPU
+description: |
+    The program attempts to obtain the identification and capabilities
+    of the currently used CPU, and print the matching set of CPU flags.
+    Such flags can be used to optimise compiled programs.
+setup      : |
+    %configure
+build      : |
+    %make
+install    : |
+    %make_install

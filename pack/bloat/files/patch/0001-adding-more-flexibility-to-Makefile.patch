@@ -1,0 +1,47 @@
+From 3a3f6fe07af7276867ecfa4075c8d9f4aa8c484f Mon Sep 17 00:00:00 2001
+From: Haz <hyphens@pm.me>
+Date: Wed, 17 Jun 2020 11:14:15 +0200
+Subject: [PATCH] adding more flexibility to Makefile for portable packaging
+
+---
+ Makefile | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 3d6dd9c..c5c1117 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,8 +1,10 @@
+ GO=go
+ GOFLAGS=-mod=vendor
+-PREFIX=/usr/local
+-BINPATH=$(PREFIX)/bin
+-SHAREPATH=$(PREFIX)/share/bloat
++DESTDIR=
++PREFIX?=/usr/local
++BINPATH=$(DESTDIR)$(PREFIX)/bin
++SHAREPATH=$(DESTDIR)$(PREFIX)/share/bloat
++DBPATH=$(DESTDIR)/var/db/bloat
+ 
+ TMPL=templates/*.tmpl
+ SRC=main.go		\
+@@ -21,7 +23,7 @@ bloat: $(SRC) $(TMPL)
+ 	$(GO) build $(GOFLAGS) -o bloat main.go
+ 
+ bloat.def.conf:
+-	sed -e "s%=database%=/var/bloat%g" \
++	sed -e "s%=database%=$(DBPATH)%g" \
+ 		-e "s%=templates%=$(SHAREPATH)/templates%g" \
+ 		-e "s%=static%=$(SHAREPATH)/static%g" \
+ 		< bloat.conf > bloat.def.conf
+@@ -39,6 +41,7 @@ uninstall:
+ 	rm -f $(BINPATH)/bloat
+ 	rm -fr $(SHAREPATH)/templates
+ 	rm -fr $(SHAREPATH)/static
++	rm -fr $(DBPATH)
+ 
+ clean: 
+ 	rm -f bloat
+-- 
+2.27.0
+

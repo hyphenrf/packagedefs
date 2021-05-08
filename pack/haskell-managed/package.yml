@@ -1,0 +1,20 @@
+name       : haskell-managed
+version    : 1.0.7
+release    : 1
+source     :
+    - https://hackage.haskell.org/package/managed-1.0.7/managed-1.0.7.tar.gz : d130c22e988b02bdb4b06234a400578638f5daba6ad9bca08f845d364733b173
+license    : BSD-3-Clause
+component  : programming.haskell
+summary    : A monad for managed values
+description: A monad for managed values
+networking : yes
+builddeps  :
+    - ghc
+    - haskell-cabal-install
+setup      : |
+    %cabal_configure
+build      : |
+    %cabal_build
+install    : |
+    %cabal_install
+    %cabal_register

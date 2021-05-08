@@ -1,0 +1,23 @@
+Disable any parallel build options.
+Index: ats2-lang-0.3.13/Makefile_dist
+===================================================================
+--- a/Makefile_dist	2019-11-03 21:12:30.118273000 +0000
++++ b/Makefile_dist	2019-11-03 21:12:52.593267000 +0000
+@@ -20,7 +20,7 @@
+ ######
+ 
+ MAKE=make
+-MAKEJ4=make -j4
++MAKEJ4=make
+ 
+ ######
+ #
+@@ -59,7 +59,7 @@
+ ######
+ #
+ src_patsopt: ; \
+-$(MAKE) C3NSTRINTKND=$(C3NSTRINTKND) -j4 -C src patsopt
++$(MAKE) C3NSTRINTKND=$(C3NSTRINTKND) -C src patsopt
+ #
+ bin_patsopt: src_patsopt ; $(CPF) src/patsopt bin/patsopt
+ #

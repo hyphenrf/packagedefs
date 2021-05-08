@@ -1,0 +1,23 @@
+name       : haskell-mwc-random
+version    : 0.14.0.0
+release    : 1
+source     :
+    - https://hackage.haskell.org/package/mwc-random-0.14.0.0/mwc-random-0.14.0.0.tar.gz : 00370edaa60a51c86663868ecc2b1995824970001875cec458e9acc13511efa2
+license    : BSD-3-Clause
+component  : programming.haskell
+summary    : Fast, high quality pseudo random number generation
+description: Fast, high quality pseudo random number generation
+networking : yes
+builddeps  :
+    - ghc
+    - haskell-cabal-install
+    - haskell-primitive
+    - haskell-vector
+    - haskell-math-functions
+setup      : |
+    %cabal_configure
+build      : |
+    %cabal_build
+install    : |
+    %cabal_install
+    %cabal_register

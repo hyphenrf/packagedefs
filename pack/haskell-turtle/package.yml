@@ -1,0 +1,39 @@
+name       : haskell-turtle
+version    : 1.5.14
+release    : 1
+source     :
+    - https://hackage.haskell.org/package/turtle-1.5.18/turtle-1.5.18.tar.gz : c8c88f5a610afcc936b6727bb6b0c71f45cdf7cb5d97f855d727c70ab7b1b375
+license    : BSD-3-Clause
+component  : programming.haskell
+summary    : Shell programming, Haskell style
+description: |
+    Turtle is a reimplementation of the Unix command line environment in Haskell so that you can use Haskell as a scripting language or a shell. Think of turtle as coreutils embedded within the Haskell language.
+networking : yes
+builddeps  :
+    - ghc
+    - haskell-cabal-install
+    - haskell-ansi-wl-pprint
+    - haskell-async
+    - haskell-clock
+    - haskell-exceptions
+    - haskell-optparse-applicative
+    - haskell-semigroups
+    - haskell-stm
+    - haskell-streaming-commons
+    - haskell-system-fileio
+    - haskell-system-filepath
+    - haskell-temporary
+    - haskell-text
+    - haskell-unix-compat
+    - haskell-foldl
+    - haskell-hostname
+    - haskell-managed
+    - haskell-optional-args
+    - haskell-directory
+setup      : |
+    %cabal_configure
+build      : |
+    %cabal_build
+install    : |
+    %cabal_install
+    %cabal_register

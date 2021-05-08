@@ -1,0 +1,22 @@
+name       : torsocks
+version    : 2.3.0_p1
+release    : 4
+source     :
+    - https://github.com/dgoulet/torsocks/archive/v2.3.0.tar.gz : 817c143e8a9d217f41a223a85139c6ca28e1b99556c547fcdb4c72dbc170b6c9
+license    : GPL-2.0-only
+component  : security.utils
+summary    : Allows you to use most socks-friendly applications in a safe way with
+    Tor. TCP only.
+description: |
+    Torsocks allows you to use most applications in a safe way with Tor. It ensures that DNS requests are handled safely and explicitly rejects any traffic other than TCP from the application you're using. It's transparent to the user and if torsocks detects any communication that can't go through the Tor network. Used as a backend to the torify wrapper.
+rundeps    :
+    - tor
+setup      : |
+    %patch -p1 <$pkgfiles/0001-Add-getdents-getdents64-support-re-ticket-28861.patch
+    %reconfigure --enable-static=no
+build      : |
+    %make
+install    : |
+    %make_install
+    # nuke docs
+    rm -rf $installdir/usr/share/doc

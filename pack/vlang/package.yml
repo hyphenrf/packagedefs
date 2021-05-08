@@ -1,0 +1,33 @@
+name       : vlang 
+version    : 0.1.24
+release    : 1
+source     :
+    - https://github.com/vlang/v/archive/0.1.24.tar.gz : 77ed24bf1c3c4eba057ace13bf0fff6fef6d9cdb3c2970f52b4be4582a148e2e
+    - git|https://github.com/vlang/vc : f47b179f821021edc7f8eb902a910b1e6a274d9e
+license    : MIT
+component  : programming
+summary    : Simple, fast, safe, compiled language for developing maintainable software
+description: |
+    V is a statically typed compiled programming language. It's similar to Go and is also influenced by Oberon, Rust, Swift.
+    It boasts super fast compile times and a syntax so simple it can be learnt in less than an hour. The language compiles itself in <1s with zero dependencies.
+    Claims performance within 3% of C, hot code reloading, cross-platform UI library, built-in graphics library, easy cross-compilation, a REPL, and more..
+    Compiles to C, and JS, with plans to compile to machine code by v1.0
+setup      : |
+    cp $sources/vc.git/v.c .
+build      : |
+    gcc -std=gnu11 -w -o v -lm
+    %make CFLAGS="-fPIC -pie" thirdparty
+# install    : |
+#     %make_install
+
+# package() {
+#     cd v-$pkgver
+#     install -d "$pkgdir/usr/lib/vlang" "$pkgdir/usr/share/vlang" "$pkgdir/usr/bin"
+#     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+#     install -Dm755 v "$pkgdir/usr/lib/vlang"
+#     cp -a examples "$pkgdir/usr/share/vlang/"
+#     cp -a thirdparty "$pkgdir/usr/lib/vlang/"
+#     cp -a vlib "$pkgdir/usr/lib/vlang/"
+#     ln -s /usr/lib/vlang/v "$pkgdir/usr/bin/v"
+#
+#     docs: docs, examples -> /usr/share/vlang/

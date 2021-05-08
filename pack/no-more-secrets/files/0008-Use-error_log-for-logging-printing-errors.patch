@@ -1,0 +1,64 @@
+From 1cd3657415ca7e23c71484b35fd821f1051f9424 Mon Sep 17 00:00:00 2001
+From: Brian Barto <bartobrian@gmail.com>
+Date: Wed, 24 Oct 2018 21:50:42 -0400
+Subject: [PATCH 08/15] Use error_log for logging/printing errors
+
+	modified:   src/nms.c
+---
+ src/nms.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
+
+diff --git a/src/nms.c b/src/nms.c
+index c7c1a44..f7438ae 100644
+--- a/src/nms.c
++++ b/src/nms.c
+@@ -13,16 +13,19 @@
+ #include "input.h"
+ #include "error.h"
+ 
+-#define VERSION                "0.3.3"
++#define VERSION "0.3.4"
+ 
+-int main(int argc, char *argv[]) {
++int main(int argc, char *argv[])
++{
+ 	int r, o;
+ 	unsigned char *input;
+ 
+ 	input = NULL;
+ 
+-	while ((o = getopt(argc, argv, "f:ascv")) != -1) {
+-		switch (o) {
++	while ((o = getopt(argc, argv, "f:ascv")) != -1)
++	{
++		switch (o)
++		{
+ 			case 'f':
+ 				nmseffect_set_foregroundcolor(optarg);
+ 				break;
+@@ -37,13 +40,18 @@ int main(int argc, char *argv[]) {
+ 				break;
+ 			case 'v':
+ 				printf("nms version " VERSION "\n");
+-				return 0;
++				return EXIT_SUCCESS;
+ 			case '?':
+ 				if (isprint(optopt))
+-					fprintf (stderr, "Unknown option '-%c'.\n", optopt);
++				{
++					error_log("Unknown option '-%c'.", optopt);
++				}
+ 				else
+-					fprintf (stderr, "Unknown option character '\\x%x'.\n", optopt);
+-				return 1;
++				{
++					error_log("Unknown option character '\\x%x'.", optopt);
++				}
++				error_print();
++				return EXIT_FAILURE;
+ 		}
+ 	}
+ 
+-- 
+2.26.0
+

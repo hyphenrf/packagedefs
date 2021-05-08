@@ -1,0 +1,36 @@
+From c357dd56dfa63add9eca7ed9d7de11c69c2a66f1 Mon Sep 17 00:00:00 2001
+From: Yawning Angel <yawning@schwanenlied.me>
+Date: Fri, 21 Jun 2019 00:23:47 +0000
+Subject: Bump the version to 0.0.12-dev
+
+---
+ ChangeLog                | 2 ++
+ obfs4proxy/obfs4proxy.go | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/ChangeLog b/ChangeLog
+index 5f3732b..fb2372f 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,5 @@
++Changes in version 0.0.12 - UNRELEASED:
++
+ Changes in version 0.0.11 - 2019-06-21:
+  - Update my e-mail address.
+  - Change the obfs4 behavior for handling handshake failure to be more
+diff --git a/obfs4proxy/obfs4proxy.go b/obfs4proxy/obfs4proxy.go
+index bac1ad1..1dd00b2 100644
+--- a/obfs4proxy/obfs4proxy.go
++++ b/obfs4proxy/obfs4proxy.go
+@@ -50,7 +50,7 @@ import (
+ )
+ 
+ const (
+-	obfs4proxyVersion = "0.0.11"
++	obfs4proxyVersion = "0.0.12-dev"
+ 	obfs4proxyLogFile = "obfs4proxy.log"
+ 	socksAddr         = "127.0.0.1:0"
+ )
+-- 
+cgit v1.2.1
+

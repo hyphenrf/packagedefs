@@ -1,0 +1,24 @@
+name       : hy
+version    : 0.18.0
+release    : 2
+source     :
+    - https://github.com/hylang/hy/releases/download/0.18.0/hy-0.18.0.tar.gz : 42f24caaa7f5b4427929859395c215c8cc6e19807b46feaa0b863f3346e5ae11
+license    : MIT
+component  : programming
+summary    : A dialect of Lisp that's embedded in Python
+description: "Lisp and Python should love each other. Let's make it happen.\nHy is\
+    \ a Lisp dialect that's embedded in Python. Since Hy transforms its Lisp\ncode\
+    \ into Python abstract syntax tree (AST) objects, you have the whole \nbeautiful\
+    \ world of Python at your fingertips, in Lisp form.\n"
+builddeps  :
+    - pkgconfig(python3)
+    - python-setuptools
+rundeps    :
+    - python-astor
+    - python-colorama
+    - python-funcparserlib
+    - python-rply
+build      : |
+    %python3_setup
+install    : "%python3_install\nrm -rf $installdir/usr/get_version\n# This file is\
+    \ not used at runtime, \n# and the way it was installed violates FHS.\n"

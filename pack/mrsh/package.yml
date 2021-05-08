@@ -1,0 +1,27 @@
+name       : mrsh
+version    : 0.0
+release    : 1
+source     :
+    - git|https://git.sr.ht/~emersion/mrsh : 657ea07572e2a9a035ec3804bec91bcbd900dac6
+license    : MIT
+component  : system.utils
+summary    : Minimal strictly POSIX shell
+description: |
+    mrsh is both a
+    * POSIX compliant shell, no less, no more
+    * Library to build more elaborate shells
+    mrsh is meant to be /bin/sh replacement, an optional interactive component with
+    readline called imrsh is provided separately.
+# builddeps  :
+#     - readline-devel #configure says 'no' on readline
+#     - pkgconfig(libedit) #build fails with this
+setup      : |
+    %apply_patches
+    %configure
+build      : |
+    %make
+install    : |
+    %make_install
+    # add mrsh to /bin
+    mkdir -p $installdir/bin
+    ln -sv %PREFIX%/bin/mrsh $installdir/bin/mrsh

@@ -1,0 +1,13 @@
+0002-Support-the-esc-key-for-aborting-the-sneakers-menu.patch
+0003-Dynamically-allocation-memory-for-the-display-buffer.patch
+0004-Should-be-using-strlen-instead-of-sizeof.patch
+0005-Turn-on-binary-optimizations.patch
+0006-Getting-the-return-value-of-write-for-now.-Will-do-s.patch
+0007-Add-input-and-error-modules-for-getting-input-and-re.patch
+0008-Use-error_log-for-logging-printing-errors.patch
+0009-Rip-out-returnopts-functionality.-Not-using-it.patch
+0010-Rip-out-whats-left-of-input-position.-Not-using-it.patch
+0011-Move-STDIN-association-to-termio-module.patch
+0012-Fix-ncurses-implementation.patch
+0013-Use-the-new-arguments-for-nmseffect_exec-and-remove-.patch
+0014-fixed-bug-where-piping-into-sneakers-caused-crash-an.patch

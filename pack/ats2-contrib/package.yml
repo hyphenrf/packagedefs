@@ -1,0 +1,17 @@
+name       : ats2-postiats-contrib
+version    : 0.1
+release    : 1
+source     :
+    - https://downloads.sourceforge.net/project/ats2-lang-contrib/ats2-lang-contrib/ATS2-Postiats-contrib-0.1.12.tgz : 6f764b15ee01518f9f00a5db148827994c437e0fd554ce4f07df6266403a2321
+license    : GPL-2.0-or-later # CHECK ME
+component  : PLEASE FILL ME IN
+summary    : PLEASE FILL ME IN
+description: |
+    PLEASE FILL ME IN
+builddeps  :
+setup      : |
+    %configure
+build      : |
+    %make
+install    : |
+    %make_install

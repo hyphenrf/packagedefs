@@ -1,0 +1,23 @@
+name       : haskell-vector-builder
+version    : 0.3.8
+release    : 1
+source     :
+    - https://hackage.haskell.org/package/vector-builder-0.3.8/vector-builder-0.3.8.tar.gz : a39afd7ac50c42de77660d235017be38ef50f792b6a98212accf687445a18073
+license    : MIT
+component  : programming.haskell
+summary    : An API for efficient and convenient construction of vectors.
+description: Vector builder. It provides the composable Builder abstraction, which has instances of the Monoid and Semigroup classes.
+networking : yes
+builddeps  :
+    - ghc
+    - haskell-cabal-install
+    - haskell-semigroups
+    - haskell-vector
+    - haskell-base-prelude
+setup      : |
+    %cabal_configure
+build      : |
+    %cabal_build
+install    : |
+    %cabal_install
+    %cabal_register

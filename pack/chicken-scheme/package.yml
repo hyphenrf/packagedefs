@@ -1,0 +1,47 @@
+name       : chicken-scheme
+version    : 5.2.0
+release    : 1
+source     :
+    - https://code.call-cc.org/releases/5.2.0/chicken-5.2.0.tar.gz : 819149c8ce7303a9b381d3fdc1d5765c5f9ac4dee6f627d1652f47966a8780fa
+license    : BSD-3-Clause
+summary    : 
+    - Feature rich R5RS Scheme compiler and interpreter with packages
+    - doc: Docs for CHICKEN Scheme
+    - feathers: Tcl/tk based source level debugger for CHICKEN Scheme
+component  :
+    - programming
+    - devel: programming.devel
+    - doc: programming
+    - feathers: programming.tools
+description: |
+    CHICKEN is a compiler for the Scheme programming language. It produces portable and efficient C and supports the R5RS and R7RS (WIP) standards, and many extensions. Chicken also provides packages, called eggs, that can be installed easily.
+homepage   : https://call-cc.org/
+
+patterns   :
+    - doc:
+      - /usr/share/doc/*
+    - feathers:
+      - /usr/bin/feathers
+      - /usr/share/chicken/feathers.*
+      - /usr/share/man/man*/feathers.*
+
+rundeps    :
+    - doc:
+      - chicken-scheme
+    - feathers:
+      - chicken-scheme
+      - tk
+
+build      : |
+    %make -j1 PLATFORM=linux VARDIR=/usr/lib
+install    : |
+    %make_install -j1 PLATFORM=linux PREFIX=%PREFIX% \
+          CSC_PROGRAM=chicken-csc CSI_PROGRAM=chicken-csi \
+          VARDIR=/usr/lib
+
+    mkdir -p $installdir/usr/share/doc/chicken
+    mv $installdir/usr/share/{chicken/doc,doc/chicken}
+# check      : |
+#     export LD_PRELOAD=/usr/lib64/libfakeroot/libfakeroot.so
+#     %make check PLATFORM=linux \
+#           CSC_PROGRAM=chicken-csc CSI_PROGRAM=chicken-csi \

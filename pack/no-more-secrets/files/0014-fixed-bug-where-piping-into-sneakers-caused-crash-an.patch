@@ -1,0 +1,38 @@
+From 90b7d0410b9ec85d5b27820822662f2ca1b112e8 Mon Sep 17 00:00:00 2001
+From: Patrick Nappa <patricknappa@gmail.com>
+Date: Wed, 13 Feb 2019 11:06:42 +1100
+Subject: [PATCH 14/15] fixed bug where piping into sneakers caused crash, and
+ added missing free
+
+---
+ src/sneakers.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/src/sneakers.c b/src/sneakers.c
+index ec16c6c..80e0151 100644
+--- a/src/sneakers.c
++++ b/src/sneakers.c
+@@ -32,7 +32,11 @@ int main(void) {
+ 
+ 	// Get terminal dimentions (needed for centering)
+ 	struct winsize w;
+-	ioctl(0, TIOCGWINSZ, &w);
++    // if not an interactive tty, w is not populated, resulting in UB
++	if (ioctl(0, TIOCGWINSZ, &w) == -1) {
++        perror("Input not from an interactive terminal");
++        return 1;
++    }
+ 	termCols = w.ws_col;
+ 
+ 	// Allocate space for our display string
+@@ -45,6 +49,7 @@ int main(void) {
+ 	// Allocate space for our display string
+ 	if ((display_uc = malloc(20 * termCols)) == NULL)
+ 	{
++        free(display);
+ 		fprintf(stderr, "Memory Allocation Error. Quitting!\n");
+ 		return 1;
+ 	}
+-- 
+2.26.0
+
